@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Свадебное приглашение</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      overflow-x: hidden;
+      background: #fcfbf5;
+    }
+
+    /* ====== Обёртка "телефон" ====== */
+    .phone {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #fcfbf5;
+    }
+
+    /* ====== Шрифт Felidae ====== */
+    @font-face {
+      font-family: 'Felidae';
+      src: url('Felidae.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ====== Бегущая строка ====== */
+    .marquee {
+      position: relative;
+      width: 100%;
+      height: 26px;
+      background: #3a2f2a;
+      color: #e8e2d8;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .marquee__track {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2em;
+      animation: marquee-scroll 22s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2em;
+      flex-shrink: 0;
+    }
+
+    .marquee__dot {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ====== HERO ====== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ====== Секция с картой ====== */
+    .map-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      background: #fcfbf5;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .map-section__ball {
+      position: absolute;
+      top: 30%;
+      left: -120px;
+      width: 340px;
+      height: 340px;
+      transform: translateY(-50%) rotate(0deg);
+      transform-origin: center center;
+      z-index: 0;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .map-section__ball img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .map-section__link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: block;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.25s ease;
+    }
+
+    .map-section__link:active {
+      transform: scale(0.99);
+    }
+
+    .map-section__link img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    /* ====== Секции с простым фото ====== */
+    .photo-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #fcfbf5;
+      isolation: isolate;
+    }
+
+    .photo-section > img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .photo-section__ball {
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      width: 340px;
+      height: 340px;
+      transform: translate(-50%, -50%) rotate(0deg);
+      transform-origin: center center;
+      z-index: 2;
+      will-change: transform;
+    }
+
+    .photo-section__ball img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ====== Финальная секция ====== */
+    .footer-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #fcfbf5;
+      isolation: isolate;
+    }
+
+    .footer-section__bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      display: block;
+    }
+
+    .footer-section__timer {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: 100%;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 4px;
+      font-family: 'Felidae', Georgia, serif;
+      color: #3a2f2a;
+      text-align: center;
+      user-select: none;
+    }
+
+    .timer__cell {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .timer__value {
+      font-size: 56px;
+      line-height: 1;
+      font-weight: normal;
+      letter-spacing: 0.02em;
+    }
+
+    .timer__label {
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 380px) {
+      .timer__value { font-size: 44px; }
+      .timer__label { font-size: 13px; }
+    }
+
+    /* ====== ПК и планшеты: показываем сайт как на телефоне ====== */
+    @media (min-width: 501px) {
+      html {
+        background: #fcfbf5;
+        height: 100%;
+      }
+
+      body {
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        background: #fcfbf5;
+      }
+
+      .phone {
+        width: 430px;
+        max-width: 100%;
+        background: #fcfbf5;
+      }
+
+      .hero,
+      .map-section,
+      .photo-section,
+      .footer-section {
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="phone">
+
+    <!-- Бегущая строка -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marqueeTrack">
+        <span class="marquee__item">
+          приглашение на свадьбу <span class="marquee__dot">•</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <img src="hero.png" alt="Свадебное приглашение">
+    </section>
+
+    <!-- Секция с картой -->
+    <section class="map-section" id="mapSection">
+      <div class="map-section__ball" id="ball">
+        <img src="ball.webp" alt="">
+      </div>
+
+      <a
+        class="map-section__link"
+        href="https://yandex.com/maps/-/CXe85L88"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="2.png" alt="Открыть карту">
+      </a>
+    </section>
+
+    <!-- Секция 3 -->
+    <section class="photo-section">
+      <img src="3.png" alt="">
+    </section>
+
+    <!-- Секция 4 -->
+    <section class="photo-section" id="photoSection4">
+      <img src="4.png" alt="">
+      <div class="photo-section__ball" id="ball4">
+        <img src="ball2.png" alt="">
+      </div>
+    </section>
+
+    <!-- Секция 5 -->
+    <section class="photo-section">
+      <img src="5.png" alt="">
+    </section>
+
+    <!-- Финальная секция -->
+    <section class="footer-section" id="footerSection">
+      <img class="footer-section__bg" src="footer.png" alt="">
+
+      <div class="footer-section__timer" id="weddingTimer">
+        <div class="timer__cell">
+          <div class="timer__value" id="tDays">00</div>
+          <div class="timer__label">дней</div>
+        </div>
+        <div class="timer__cell">
+          <div class="timer__value" id="tHours">00</div>
+          <div class="timer__label">часов</div>
+        </div>
+        <div class="timer__cell">
+          <div class="timer__value" id="tMinutes">00</div>
+          <div class="timer__label">минут</div>
+        </div>
+        <div class="timer__cell">
+          <div class="timer__value" id="tSeconds">00</div>
+          <div class="timer__label">секунд</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    /* ====== Бегущая строка ====== */
+    (function () {
+      const track = document.getElementById('marqueeTrack');
+      const item = track.querySelector('.marquee__item');
+
+      const phone = document.querySelector('.phone');
+      const viewportWidth = phone ? phone.offsetWidth : window.innerWidth;
+
+      const itemWidth = item.getBoundingClientRect().width;
+      const repeats = Math.max(2, Math.ceil((viewportWidth * 2) / itemWidth) + 1);
+
+      const half = document.createDocumentFragment();
+      const clone = item.cloneNode(true);
+      for (let i = 1; i < repeats; i++) {
+        half.appendChild(clone.cloneNode(true));
+      }
+      track.appendChild(half);
+
+      const firstHalf = Array.from(track.children);
+      firstHalf.forEach(node => track.appendChild(node.cloneNode(true)));
+    })();
+
+    /* ====== Вращение шара при скролле ====== */
+    function attachBallRotation(sectionId, ballId, translateX) {
+      const section = document.getElementById(sectionId);
+      const ball = document.getElementById(ballId);
+      if (!section || !ball) return;
+
+      const tx = translateX || '0';
+      let ticking = false;
+
+      function updateRotation() {
+        const rect = section.getBoundingClientRect();
+        const windowH = window.innerHeight;
+
+        const total = windowH + rect.height;
+        const passed = windowH - rect.top;
+        let progress = passed / total;
+        progress = Math.max(0, Math.min(1, progress));
+
+        const degrees = progress * 360;
+
+        ball.style.transform =
+          `translate(${tx}, -50%) rotate(${degrees}deg)`;
+
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          requestAnimationFrame(updateRotation);
+          ticking = true;
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      updateRotation();
+    }
+
+    attachBallRotation('mapSection', 'ball', '0');
+    attachBallRotation('photoSection4', 'ball4', '-50%');
+
+    /* ====== Таймер до 31.10.2026 ====== */
+    (function () {
+      const target = new Date(2026, 9, 31, 0, 0, 0);
+
+      const elDays = document.getElementById('tDays');
+      const elHours = document.getElementById('tHours');
+      const elMinutes = document.getElementById('tMinutes');
+      const elSeconds = document.getElementById('tSeconds');
+
+      function pad(n) {
+        return n < 10 ? '0' + n : '' + n;
+      }
+
+      function tick() {
+        const now = new Date();
+        let diff = target - now;
+
+        if (diff <= 0) {
+          elDays.textContent = '00';
+          elHours.textContent = '00';
+          elMinutes.textContent = '00';
+          elSeconds.textContent = '00';
+          return;
+        }
+
+        const totalSec = Math.floor(diff / 1000);
+        const days = Math.floor(totalSec / 86400);
+        const hours = Math.floor((totalSec % 86400) / 3600);
+        const minutes = Math.floor((totalSec % 3600) / 60);
+        const seconds = totalSec % 60;
+
+        elDays.textContent = pad(days);
+        elHours.textContent = pad(hours);
+        elMinutes.textContent = pad(minutes);
+        elSeconds.textContent = pad(seconds);
+      }
+
+      tick();
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+</body>
+</html>
